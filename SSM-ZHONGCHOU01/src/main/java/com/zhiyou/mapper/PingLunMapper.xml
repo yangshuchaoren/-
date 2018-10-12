@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.PingLunMapper">
+
+<!-- 所有的评论的查看   问题数据不能映射上  -->
+
+<resultMap type="pingLun" id="ping">
+<id column="plid" property="id"/>
+<result column="plcontent" property="content"/>
+<association property="user" javaType="user">
+<id column="uid" property="id"/>
+<result column="uname" property="name"/>
+<result column="utelnumber" property="telnumber"/>
+</association>
+<association property="project" javaType="project">
+<id column="p.id" property="id"/>
+<result column="paim" property="aim"/>
+<result column="pfileid" property="fileid"/>
+<result column="pmoney" property="money"/>
+<result column="pprovince" property="province"/>
+<result column="pcity" property="city"/>
+ </association>
+</resultMap>
+<select id="allping" resultMap="ping">
+select u.name uname,u.telnumber unumber,u.id uid,pl.content plcontent,pl.id plid,p.aim paim,p.fileid pfiled,p.money pmoney,
+p.province pprovince,p.city pcity,p.id pid         
+from pinglun pl,user u,project p where 
+pl.pid=p.id and pl.uid=u.id
+</select>
+<!-- 添加的评论 -->
+<insert id="addping" parameterType="com.zhiyou.pojo.Type">
+insert into pinglun(uid,pid,content) values(#{uid},#{pid},#{content})
+</insert>
+</mapper>

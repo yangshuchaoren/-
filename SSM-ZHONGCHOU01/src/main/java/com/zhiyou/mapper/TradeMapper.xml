@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.TradeMapper">
+<insert id="">
+insert into trade(u_id,p_id,money,date,details)
+values(#{u_id},#{p_id},#{money},#{date},#{details}) 
+</insert>
+</mapper>

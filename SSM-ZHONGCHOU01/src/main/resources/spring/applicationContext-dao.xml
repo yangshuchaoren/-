@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- spring 管理mybatis的配置：
+		配置数据源dataSource，配置sqlSessionFactory对象，配置扫描mapper映射文件  -->
+	<context:property-placeholder location="classpath:mybatis/jdbc.properties"/>
+	<!-- 使用dbcp数据库连接池，配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.Driver}"/>  
+        <property name="url" value="${jdbc.url}"/>  
+        <property name="username" value="${jdbc.username}"/>  
+        <property name="password" value="${jdbc.password}"/>  
+	</bean>
+	<!-- 配置sqlSessionFactory -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis/mybatis.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 扫描映射文件生成代理mapper的代理类对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.zhiyou.mapper"></property>
+	</bean>      
+ </beans>

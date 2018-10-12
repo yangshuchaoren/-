@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.TypeMapper">
+
+<!-- 进行所有项目的种类的查询 -->
+<select id="allType" resultType="com.zhiyou.pojo.Type">
+select * from type  
+</select>
+<insert id="addtype" parameterType="com.zhiyou.pojo.Type">
+insert into type(type,description) values(#{type},#{description})
+</insert>
+</mapper>

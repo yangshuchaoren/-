@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.SupportMapper">
+<resultMap type="com.zhiyou.pojo.Support" id="support">
+<association property="com.zhiyou.pojo.Project">
+<id column="p.id" property="id"/>
+<result column="p.name" property="name"/>
+<result column="p.aim" property="aim"/>
+<result column="p.title" property="title"/>
+</association>
+<association property="com.zhiyou.pojo.User">
+<id column="u.id" property="id"/>
+<result column="u.name" property="name"/>
+</association>
+</resultMap>
+<!-- mapper文件映射 -->
+<select id="seeAllUser" resultMap="support">
+select p.name,p.aim,p.title,u.name,u.id,p.id
+ from 
+user u,project p,support s 
+where s.pid=p.id and s.uid=u.id
+and s.uid=#{id}
+</select>
+<select id="seeAll" resultMap="support">
+select p.name,p.aim,p.title,u.name,u.id,p.id  from 
+where s.pid=p.id and s.uid=u.id
+</select>
+<insert id="">
+insert into support(uid,pid) values(#{uid},#{pid})
+</insert>
+</mapper>

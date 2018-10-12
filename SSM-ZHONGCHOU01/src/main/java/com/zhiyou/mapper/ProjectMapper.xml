@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.ProjectMapper">
+	<select id="seeAllProjects" resultType="com.zhiyou.pojo.Project">
+		select * from  project
+	</select>
+	<select id="seeProjectById" resultType="com.zhiyou.pojo.Project">
+		select * from project where id=#{id}
+	</select>
+	<!-- 进行项目信息的插入 -->
+	<insert id="addProject" parameterType="com.zhiyou.pojo.Project">
+		insert into project
+		(name,idnumber,telnumber,province,
+		city,servicename,servicetel,type,fileid,
+		title,aim,money,day,video,story,
+		returning,aboutus,shortname,zhichizhe) values(
+		#{name},#{idnumber},#{telnumber},#{province},
+		#{city},#{servicename},#{servicetel},#{type},#{fileid},
+		#{title},#{aim},#{money},#{day},#{video},#{story},
+		#{returning},#{aboutus},#{shortname},#{zhichizhe})
+	</insert>
+	<delete id="deletProject">
+	delete from project where id=#{id}
+	</delete>
+	<select id="seeSupport" resultType="com.zhiyou.pojo.Project">
+	select p.name,p.province,p.city,p.aim,p.money 
+	from project p,user u,support s 
+	where s.uid=u.id 
+	and  s.pid=p.id
+	and s.uid=#{id}	
+	</select>
+	<select id="seeCanyu" resultType="com.zhiyou.pojo.Project">
+	select p.name,p.province,p.city,p.aim,p.money 
+	from project p,user u,faqi f 
+	where f.uid=u.id 
+	and f.pid=p.id
+	and f.uid=#{id}	
+	</select>
+	<update id="prochangetong">
+	update project set state="1"  where id=#{id}
+	</update>
+	<select id="mohuchazhao" resultType="com.zhiyou.pojo.Project">
+	select *
+ 	from project
+ 	<where>
+ 	<if test="state != null">
+ 		and state like "%"#{state}"%"
+ 	</if>
+ 	<if test="type != null">
+ 		and type like "%"#{type}"%"
+ 	</if>
+ 	</where>
+	</select>
+</mapper>

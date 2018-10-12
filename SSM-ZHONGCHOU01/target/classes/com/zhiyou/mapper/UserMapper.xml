@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.UserMapper">
+	<insert id="addUser">
+		insert into user(telnumber,password)
+		values(#{telnumber},#{password})
+	</insert>
+	<resultMap type="com.zhiyou.pojo.User" id="user">
+	<id column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="password" property="password"/>
+	</resultMap>
+	<!-- 进行登录的操作 -->
+	<select id="login" resultType="com.zhiyou.pojo.User">
+	select * from user  where  telnumber=#{telnumber}
+</select> 
+	<select id="seeAllUser" resultType="com.zhiyou.pojo.User">
+	select * from user; 
+	</select>
+	<select id="seeUserById" resultType="com.zhiyou.pojo.User">
+	select * from user where id=#{id}
+	</select>
+	<delete id="">
+	delete from user where id=#{id}
+	</delete>
+	<select id="seeCanYu" resultType="com.zhiyou.pojo.Project">
+	select * from user u,project p where u.canyu=p.id  and  u.id=#{id}
+	</select>
+	<select id="seeFaQi" resultType="com.zhiyou.pojo.Project">
+	select * from user u,project p where u.faqi=p.id  and  u.id=#{id}
+	</select>
+	<update id="changeUser" parameterType="com.zhiyou.pojo.User" >
+	update user set name=#{name},
+	password=#{password},
+	email=#{email},telnumber=#{telnumber},image=#{image}
+    where id=#{id}
+	</update>
+	<!-- 进行实名验证的操作 -->
+	<update id="truename">
+	update user set idimage=#{idimage},idimageback=#{idimageback}
+	where id=#{id};
+	</update>
+	<!-- 进行审核的内容的查看 -->
+	<select id="tongguo"  resultType="com.zhiyou.pojo.User">
+	select * from user  
+	</select>
+	<select id="weitongguo"  resultType="com.zhiyou.pojo.User">
+	select * from user where state="审核为通过"
+	</select>
+	<!-- 审核状态的修改 -->
+	<update id="changetongguo">
+	update user set state="1" where id=#{id}
+	</update>
+</mapper>
+
